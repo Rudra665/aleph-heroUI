@@ -9,12 +9,10 @@ import {
   NavbarItem,
   NavbarMenuItem,
 } from "@heroui/navbar";
-
 import { Button } from "@heroui/button";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { link as linkStyles } from "@heroui/theme";
-
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
@@ -62,12 +60,14 @@ export const Navbar = () => {
             </Button>
           </NavbarItem>
 
-          <NavbarItem>{/* <ThemeSwitch /> */}</NavbarItem>
+          <NavbarItem>
+            <ThemeSwitch />
+          </NavbarItem>
         </NavbarContent>
 
         {/* Mobile: Theme + Hamburger */}
         <NavbarContent className="flex lg:hidden" justify="end">
-          {/* <ThemeSwitch /> */}
+          <ThemeSwitch />
           <NavbarMenuToggle />
         </NavbarContent>
 
