@@ -1,0 +1,81 @@
+import { useModalStore } from "@/store/modalStore";
+
+export default function TopProducts() {
+  const products = [
+    {
+      icon: "🎓",
+      title: "Educational Tours",
+      description:
+        "Immersive learning experiences that combine education with adventure, perfect for students and educational institutions seeking knowledge beyond the classroom.",
+    },
+    {
+      icon: "🏢",
+      title: "Corporate Tours",
+      description:
+        "Team-building expeditions and corporate retreats designed to strengthen bonds, enhance collaboration, and inspire innovation in natural settings.",
+    },
+    {
+      icon: "⛰️",
+      title: "Himalayan Expedition",
+      description:
+        "Epic journeys through the world’s highest mountains, offering unparalleled adventure and spiritual connection with nature’s grandeur.",
+    },
+  ];
+  const openModal = useModalStore((s: any) => s.openModal);
+  return (
+    <section id="products" className="w-full py-26">
+      {/* Heading */}
+      <div className="text-center mb-16 px-4">
+        <h2 className="text-3xl sm:text-4xl font-bold font-outfit">
+          Top Products by <span className="text-red-500">Aleph</span>
+        </h2>
+        <p className="text-gray-600 mt-3 font-outfit max-w-2xl mx-auto">
+          Curated travel experiences designed to inspire, educate, and
+          transform.
+        </p>
+      </div>
+
+      {/* Cards */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+        {products.map((item, index) => (
+          <div
+            key={index}
+            className="
+              group p-10 rounded-2xl border border-gray-200 
+              transition-all duration-300 shadow-sm bg-white
+              hover:border-red-500 cursor-pointer
+            ">
+            {/* Icon with hover effect */}
+            <div
+              className="
+                w-16 h-16 rounded-xl bg-red-100 text-red-500 text-3xl 
+                flex items-center justify-center mb-6 transition-all duration-300
+                group-hover:bg-red-500 group-hover:text-white
+              ">
+              {item.icon}
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-4 font-outfit">
+              {item.title}
+            </h3>
+
+            {/* Description */}
+            <p className="text-gray-600 leading-relaxed font-outfit">
+              {item.description}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Button */}
+      <div className="text-center mt-14">
+        <button
+          onClick={openModal}
+          className="bg-red-500 hover:bg-red-600 text-white px-10 py-4 rounded-xl font-outfit text-lg shadow-md transition-all">
+          Book Your Journey
+        </button>
+      </div>
+    </section>
+  );
+}
