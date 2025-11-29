@@ -8,15 +8,23 @@ export const Logo: React.FC<IconSvgProps> = ({
   width,
   height,
   ...props
-}) => (
-  <Image
-    src="/logo.png"
-    alt="Logo"
-    width={size || width}
-    height={size || height}
-    {...props}
-  />
-);
+}) => {
+  const parseNumber = (v?: string | number) =>
+    typeof v === "string" ? Number(v) : v;
+
+  const w = parseNumber(size ?? width);
+  const h = parseNumber(size ?? height);
+
+  return (
+    <Image
+      src="/logo.png"
+      alt="Logo"
+      width={w}
+      height={h}
+      // {...props}
+    />
+  );
+};
 
 export const DiscordIcon: React.FC<IconSvgProps> = ({
   size = 24,
