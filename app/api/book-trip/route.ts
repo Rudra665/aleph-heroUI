@@ -1,4 +1,18 @@
-import nodemailer from "nodemailer";
+import { NextResponse } from "next/server";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY!);
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+}
 
 export async function POST(req: Request) {
   try {
@@ -15,39 +29,58 @@ export async function POST(req: Request) {
       preferences,
     } = body;
 
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_PASS, // app password[web:155]
-      },
-    });
+    if (!fullName || !email || !destination) {
+      return withCors(
+        NextResponse.json(
+          { ok: false, error: "Missing required fields" },
+          { status: 400 }
+        )
+      );
+    }
 
-    await transporter.sendMail({
-      from: `"Aleph Website" <${process.env.GMAIL_USER}>`,
+    const { error } = await resend.emails.send({
+      from: "Aleph Website <no-reply@aleph.co.in>",
       to: "thealephcampeur@gmail.com",
       subject: "New Booking Request from Website",
       text: `
+New booking request from the website:
+
 Full Name: ${fullName}
 Email: ${email}
-Phone: ${phone}
+Phone: ${phone || "-"}
+
 Destination: ${destination}
-Start Date: ${startDate}
-End Date: ${endDate}
-Travelers: ${travelers}
+Start Date: ${startDate?.day || "-"}-${startDate?.month || "-"}-${startDate?.year || "-"}
+End Date: ${endDate?.day || "-"}-${endDate?.month || "-"}-${endDate?.year || "-"}
+Number of Travelers: ${travelers || "-"}
 
-Preferences / Notes:
+Additional Preferences:
 ${preferences || "-"}
-      `,
+      `.trim(),
     });
 
-    return new Response(JSON.stringify({ ok: true }), { status: 200 });
+    if (error) {
+      console.error("Resend error:", error);
+      return withCors(
+        NextResponse.json(
+          { ok: false, error: "Email failed to send" },
+          { status: 500 }
+        )
+      );
+    }
+
+    return withCors(NextResponse.json({ ok: true }, { status: 200 }));
   } catch (err: any) {
-    console.error(err);
-    return new Response(JSON.stringify({ ok: false, error: "Email failed" }), {
-      status: 500,
-    });
+    console.error("Book-trip API error:", err);
+    return withCors(
+      NextResponse.json({ ok: false, error: "Server error" }, { status: 500 })
+    );
   }
+}
+
+function withCors(res: NextResponse) {
+  res.headers.set("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  return res;
 }

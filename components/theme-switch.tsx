@@ -8,6 +8,7 @@ import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
+import { useThemeStore } from "@/store/themeStore";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -18,14 +19,23 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
   className,
   classNames,
 }) => {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
   const isSSR = useIsSSR();
 
-  const onChange = () => {
-    theme === "light" ? setTheme("aleph-dark") : setTheme("light");
-  };
+  // get theme from zustand (persistent)
+  const mode = useThemeStore((s) => s.mode);
+  const setMode = useThemeStore((s) => s.setMode);
+  const toggleMode = useThemeStore((s) => s.toggleMode);
 
-  const isDark = theme === "aleph-dark";
+  const isDark = mode === "aleph-dark";
+
+  const onChange = () => {
+    const next = isDark ? "light" : "aleph-dark";
+
+    // update store + next-themes
+    setMode(next);
+    setTheme(next);
+  };
 
   const {
     Component,

@@ -17,13 +17,17 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { Logo } from "@/components/icons";
 import { useModalStore } from "@/store/modalStore";
+import { useState } from "react";
 
 export const Navbar = () => {
   const openModal = useModalStore((s: any) => s.openModal);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
     <>
       <HeroUINavbar
         maxWidth="xl"
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
         className="fixed top-0 z-50 bg-background/80 backdrop-blur-lg py-6 shadow-md">
         {/* Left: Logo */}
         <NavbarContent className="basis-1/5" justify="start">
@@ -76,16 +80,20 @@ export const Navbar = () => {
           <div className="mt-24 flex flex-col gap-4">
             {siteConfig.navItems.map((item) => (
               <NavbarMenuItem key={item.href}>
-                <NextLink href={item.href} className="text-lg text-foreground">
+                <NextLink
+                  href={item.href}
+                  className="text-lg text-foreground"
+                  onClick={() => setIsMenuOpen(false)}>
                   {item.label}
                 </NextLink>
               </NavbarMenuItem>
             ))}
-
-            {/* Book Demo button inside mobile menu */}
             <NavbarMenuItem>
               <Button
-                onPress={openModal}
+                onPress={() => {
+                  setIsMenuOpen(false);
+                  openModal();
+                }}
                 className="text-white w-full bg-red-500">
                 Book Demo
               </Button>

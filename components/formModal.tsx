@@ -32,10 +32,31 @@ export default function BookAdventureModal() {
   const [travelers, setTravelers] = useState<string | undefined>();
   const [preferences, setPreferences] = useState("");
   const [loading, setLoading] = useState(false);
+  const [customDestination, setCustomDestination] = useState(""); // NEW
+  const compareDates = (date1: any, date2: any) => {
+    if (!date1 || !date2) return false;
+
+    // Compare year first, then month, then day
+    if (date1.year !== date2.year) return date1.year < date2.year;
+    if (date1.month !== date2.month) return date1.month < date2.month;
+    return date1.day < date2.day;
+  };
 
   const handleSubmit = async () => {
+    if (endDate && startDate && compareDates(endDate, startDate)) {
+      addToast({
+        title: "Invalid dates",
+        description: "End date must be after start date.",
+        color: "danger",
+      });
+      return;
+    }
     setLoading(true);
     try {
+      const finalDestination =
+        destination === "custom" && customDestination
+          ? customDestination
+          : destination;
       const res = await fetch("/api/book-trip", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +64,7 @@ export default function BookAdventureModal() {
           fullName,
           email,
           phone,
-          destination,
+          destination: finalDestination,
           startDate,
           endDate,
           travelers,
@@ -158,12 +179,40 @@ export default function BookAdventureModal() {
                     onSelectionChange={(keys) =>
                       setDestination(Array.from(keys)[0] as string)
                     }>
-                    <SelectItem key="leh">Leh</SelectItem>
-                    <SelectItem key="spiti">Spiti</SelectItem>
-                    <SelectItem key="ladakh">Ladakh</SelectItem>
+                    <SelectItem key="Rishikesh - River Rafting & Yoga">
+                      Rishikesh - River Rafting & Yoga
+                    </SelectItem>
+                    <SelectItem key="Manali - Mountain Adventures">
+                      Manali - Mountain Adventures
+                    </SelectItem>
+                    <SelectItem key="Ladakh - High Altitude Expeditions">
+                      Ladakh - High Altitude Expeditions
+                    </SelectItem>
+                    <SelectItem key="Himachal - Trekking & Camping">
+                      Himachal - Trekking & Camping
+                    </SelectItem>
+                    <SelectItem key="Kerala - Backwater Exploration">
+                      Kerala - Backwater Exploration
+                    </SelectItem>
+                    <SelectItem key="Uttarakhand - Wildlife & Nature">
+                      Uttarakhand - Wildlife & Nature
+                    </SelectItem>
+
+                    {/* NEW: custom option */}
+                    <SelectItem key="custom">Custom destination</SelectItem>
                   </Select>
 
                   <div className="grid gap-4 sm:grid-cols-2">
+                    {destination === "custom" && (
+                      <Input
+                        label="Custom Destination"
+                        placeholder="Enter your destination"
+                        variant="bordered"
+                        value={customDestination}
+                        onChange={(e) => setCustomDestination(e.target.value)}
+                        isRequired
+                      />
+                    )}
                     <DatePicker
                       label="Start Date"
                       variant="bordered"
@@ -171,12 +220,20 @@ export default function BookAdventureModal() {
                       value={startDate}
                       onChange={setStartDate}
                     />
+
                     <DatePicker
                       label="End Date"
                       variant="bordered"
                       startContent={<span className="text-danger-500">📅</span>}
                       value={endDate}
-                      onChange={setEndDate}
+                      onChange={(newEndDate) => {
+                        // Block if newEndDate is same as or before startDate
+                        if (startDate && compareDates(newEndDate, startDate)) {
+                          return; // don't update
+                        }
+                        setEndDate(newEndDate);
+                      }}
+                      minValue={startDate}
                     />
                   </div>
 

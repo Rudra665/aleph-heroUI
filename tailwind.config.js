@@ -26,9 +26,9 @@ const config = {
             content1: "rgb(68, 68, 68)",
 
             primary: "rgb(218, 0, 55)",
-            // primaryForeground: "rgb(237, 237, 237)",
+            primaryForeground: "rgb(237, 237, 237)",
 
-            // foreground: "rgb(237, 237, 237)",
+            foreground: "rgb(237, 237, 237)",
             border: "rgb(68, 68, 68)",
             focus: "rgb(218, 0, 55)",
           },

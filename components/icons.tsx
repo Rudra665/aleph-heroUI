@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { IconSvgProps } from "@/types";
 import Image from "next/image";
+import { useThemeStore } from "@/store/themeStore";
 
 export const Logo: React.FC<IconSvgProps> = ({
   // size  ,
@@ -12,18 +13,40 @@ export const Logo: React.FC<IconSvgProps> = ({
   const parseNumber = (v?: string | number) =>
     typeof v === "string" ? Number(v) : v;
 
-  const w = parseNumber(width);
-  const h = parseNumber(height);
+  const w = parseNumber(width) ?? 140; // default size
+  const h = parseNumber(height) ?? 40;
+  const mode = useThemeStore((s) => s.mode);
 
-  return (
-    <Image
-      src="/logo.png"
-      alt="Logo"
-      width={w}
-      height={h}
-      // {...props}
-    />
-  );
+  const effectiveTheme = mode ?? "light";
+  console.log("Effective theme in Logo:", effectiveTheme);
+  const src = effectiveTheme === "aleph-dark" ? "/logo-white.png" : "/logo.png";
+
+  // Only forward image-relevant props to Next.js Image to satisfy typings
+  // const imgProps = rest as React.ComponentPropsWithoutRef<'img'>;
+
+  return <Image src={src} alt="Logo" width={w} height={h} />;
+};
+export const LogoFooter: React.FC<IconSvgProps> = ({
+  // size  ,
+  width,
+  height,
+  ...props
+}) => {
+  const parseNumber = (v?: string | number) =>
+    typeof v === "string" ? Number(v) : v;
+
+  const w = parseNumber(width) ?? 140; // default size
+  const h = parseNumber(height) ?? 40;
+  const mode = useThemeStore((s) => s.mode);
+
+  const effectiveTheme = mode ?? "light";
+  console.log("Effective theme in Logo:", effectiveTheme);
+  const src = effectiveTheme === "aleph-dark" ? "/logo-white.png" : "/logo.png";
+
+  // Only forward image-relevant props to Next.js Image to satisfy typings
+  // const imgProps = rest as React.ComponentPropsWithoutRef<'img'>;
+
+  return <Image src={src} alt="Logo" width={w} height={h} />;
 };
 
 export const DiscordIcon: React.FC<IconSvgProps> = ({
