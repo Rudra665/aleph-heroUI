@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -13,12 +14,69 @@ import {
   DatePicker,
   Textarea,
 } from "@heroui/react";
+import { addToast } from "@heroui/toast"; // <-- HeroUI toast[web:160]
 import { useModalStore } from "@/store/modalStore";
 
 export default function BookAdventureModal() {
   const modalOpen = useModalStore((s: any) => s.modalOpen);
   const openModal = useModalStore((s: any) => s.openModal);
   const closeModal = useModalStore((s: any) => s.closeModal);
+
+  // form state (added)
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [destination, setDestination] = useState<string | undefined>();
+  const [startDate, setStartDate] = useState<any>(null);
+  const [endDate, setEndDate] = useState<any>(null);
+  const [travelers, setTravelers] = useState<string | undefined>();
+  const [preferences, setPreferences] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/book-trip", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName,
+          email,
+          phone,
+          destination,
+          startDate,
+          endDate,
+          travelers,
+          preferences,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        addToast({
+          title: "Booking request sent",
+          description: "We’ll contact you shortly.",
+          color: "success", // green bottom-left
+        });
+        closeModal();
+      } else {
+        addToast({
+          title: "Failed to send",
+          description: data.error || "Please try again.",
+          color: "danger", // red bottom-left
+        });
+      }
+    } catch (err: any) {
+      addToast({
+        title: "Error",
+        description: err.message || "Something went wrong.",
+        color: "danger",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="flex justify-center">
@@ -58,6 +116,8 @@ export default function BookAdventureModal() {
                     placeholder="Enter your full name"
                     variant="bordered"
                     isRequired
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
                   />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Input
@@ -66,11 +126,15 @@ export default function BookAdventureModal() {
                       type="email"
                       variant="bordered"
                       isRequired
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <Input
                       label="Phone Number"
                       placeholder="(+91) 9882222700"
                       variant="bordered"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
                     />
                   </div>
                 </section>
@@ -83,7 +147,11 @@ export default function BookAdventureModal() {
                     label="Destination"
                     placeholder="Select your destination"
                     variant="bordered"
-                    startContent={<span className="text-danger-500">📍</span>}>
+                    startContent={<span className="text-danger-500">📍</span>}
+                    selectedKeys={destination ? [destination] : []}
+                    onSelectionChange={(keys) =>
+                      setDestination(Array.from(keys)[0] as string)
+                    }>
                     <SelectItem key="leh">Leh</SelectItem>
                     <SelectItem key="spiti">Spiti</SelectItem>
                     <SelectItem key="ladakh">Ladakh</SelectItem>
@@ -94,11 +162,15 @@ export default function BookAdventureModal() {
                       label="Start Date"
                       variant="bordered"
                       startContent={<span className="text-danger-500">📅</span>}
+                      value={startDate}
+                      onChange={setStartDate}
                     />
                     <DatePicker
                       label="End Date"
                       variant="bordered"
                       startContent={<span className="text-danger-500">📅</span>}
+                      value={endDate}
+                      onChange={setEndDate}
                     />
                   </div>
 
@@ -106,7 +178,11 @@ export default function BookAdventureModal() {
                     label="Number of Travelers"
                     placeholder="Select number of travelers"
                     variant="bordered"
-                    startContent={<span className="text-danger-500">👤</span>}>
+                    startContent={<span className="text-danger-500">👤</span>}
+                    selectedKeys={travelers ? [travelers] : []}
+                    onSelectionChange={(keys) =>
+                      setTravelers(Array.from(keys)[0] as string)
+                    }>
                     {Array.from({ length: 10 }).map((_, i) => (
                       <SelectItem key={i + 1}>{i + 1}</SelectItem>
                     ))}
@@ -116,6 +192,8 @@ export default function BookAdventureModal() {
                     label="Additional Preferences"
                     placeholder="Tell us about your preferences, activities, budget, etc."
                     variant="bordered"
+                    value={preferences}
+                    onChange={(e) => setPreferences(e.target.value)}
                   />
                 </section>
               </ModalBody>
@@ -123,7 +201,10 @@ export default function BookAdventureModal() {
                 <Button variant="light" onPress={closeModal}>
                   Cancel
                 </Button>
-                <Button color="danger" onPress={closeModal}>
+                <Button
+                  color="danger"
+                  onPress={handleSubmit}
+                  isLoading={loading}>
                   Submit Booking Request
                 </Button>
               </ModalFooter>

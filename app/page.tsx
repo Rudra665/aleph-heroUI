@@ -3,8 +3,8 @@ import Vision from "@/app/Vision/vision";
 import WhyChooseUs from "@/app/WhyChooseUs/whyChooseUs";
 import Services from "@/app/Services/services";
 import TopProducts from "@/app/Products/products";
-import { Modal } from "@heroui/react";
 import { useModalStore } from "@/store/modalStore";
+
 export default function Home() {
   const openModal = useModalStore((s: any) => s.openModal);
   return (

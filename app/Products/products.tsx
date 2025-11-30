@@ -29,7 +29,7 @@ export default function TopProducts() {
         <h2 className="text-3xl sm:text-4xl font-bold font-outfit">
           Top Products by <span className="text-red-500">Aleph</span>
         </h2>
-        <p className="text-gray-600 mt-3 font-outfit max-w-2xl mx-auto">
+        <p className="text-gray-400 mt-3 font-outfit max-w-2xl mx-auto text-sm">
           Curated travel experiences designed to inspire, educate, and
           transform.
         </p>
@@ -42,7 +42,7 @@ export default function TopProducts() {
             key={index}
             className="
               group p-10 rounded-2xl border border-gray-200 
-              transition-all duration-300 shadow-sm bg-white
+              transition-all duration-300 shadow-sm 
               hover:border-red-500 cursor-pointer
             ">
             {/* Icon with hover effect */}
@@ -56,12 +56,12 @@ export default function TopProducts() {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold text-gray-900 mb-4 font-outfit">
+            <h3 className="text-xl font-semibold  mb-4 font-outfit">
               {item.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600 leading-relaxed font-outfit">
+            <p className="text-gray-400 leading-relaxed font-outfit">
               {item.description}
             </p>
           </div>

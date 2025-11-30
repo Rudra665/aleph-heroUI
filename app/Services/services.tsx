@@ -62,8 +62,8 @@ export default function Services() {
 
                 ${
                   isActive
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-200 bg-white hover:border-red-300"
+                    ? "border-red-500 bg-['#222831']"
+                    : "border-gray-200  hover:border-red-300"
                 }
               `}>
               {/* Icon */}
@@ -85,7 +85,7 @@ export default function Services() {
               <h3
                 className={`
                   text-lg font-semibold mb-4 font-outfit
-                  ${isActive ? "text-red-600" : "text-gray-900 group-hover:text-red-500"}
+                  ${isActive ? "text-red-600" : " group-hover:text-red-500"}
                 `}>
                 {service.title}
               </h3>
@@ -93,9 +93,7 @@ export default function Services() {
               {/* List items - NO hover effects */}
               <ul className="space-y-2">
                 {service.items.map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex items-center gap-2 text-gray-700 font-outfit">
+                  <li key={i} className="flex items-center gap-2 font-outfit">
                     <span className="text-red-500 text-sm">•</span> {item}
                   </li>
                 ))}

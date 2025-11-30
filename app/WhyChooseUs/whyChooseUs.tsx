@@ -36,7 +36,7 @@ export default function WhyChooseUs() {
           Why Choose <span className="text-red-500">Aleph</span>
         </h2>
 
-        <p className="text-gray-600 text-sm mt-2 max-w-2xl mx-auto">
+        <p className="text-gray-400 text-sm mt-2 max-w-2xl mx-auto">
           Travel with purpose, adventure with conscience – creating lasting
           positive impact.
         </p>
@@ -48,7 +48,7 @@ export default function WhyChooseUs() {
           <Link
             key={index}
             href={item.link}
-            className="group p-8 border border-gray-300 rounded-2xl bg-white shadow-sm cursor-pointer 
+            className="group p-8 border border-gray-300 rounded-2xl shadow-sm cursor-pointer 
                        transition-all duration-300 hover:border-red-500 hover:shadow-md">
             {/* Icon Box */}
             <div
@@ -64,7 +64,7 @@ export default function WhyChooseUs() {
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+            <p className="text-gray-400 leading-relaxed">{item.desc}</p>
           </Link>
         ))}
       </div>

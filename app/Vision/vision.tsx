@@ -13,7 +13,7 @@ export default function Vision() {
         {/* Vision Card */}
         <Link
           href="#"
-          className="group p-8 border border-gray-200 rounded-2xl shadow-sm bg-white cursor-pointer 
+          className="group p-8 border border-gray-200 rounded-2xl shadow-sm cursor-pointer 
                      transition-all duration-300 hover:border-red-500">
           <div className="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center mb-4">
             <span
@@ -38,7 +38,7 @@ export default function Vision() {
         {/* Mission Card */}
         <Link
           href="#"
-          className="group p-8 border border-gray-200 rounded-2xl shadow-sm bg-white cursor-pointer 
+          className="group p-8 border border-gray-200 rounded-2xl shadow-sm  cursor-pointer 
                      transition-all duration-300 hover:border-red-500">
           <div className="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center mb-4">
             <span
