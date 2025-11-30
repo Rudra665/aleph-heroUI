@@ -24,7 +24,7 @@ export const Logo: React.FC<IconSvgProps> = ({
   // Only forward image-relevant props to Next.js Image to satisfy typings
   // const imgProps = rest as React.ComponentPropsWithoutRef<'img'>;
 
-  return <Image src={src} alt="Logo" width={w} height={h} />;
+  return <Image src={src} alt="Logo" width={w} height={h} unoptimized />;
 };
 export const LogoFooter: React.FC<IconSvgProps> = ({
   // size  ,
@@ -46,7 +46,7 @@ export const LogoFooter: React.FC<IconSvgProps> = ({
   // Only forward image-relevant props to Next.js Image to satisfy typings
   // const imgProps = rest as React.ComponentPropsWithoutRef<'img'>;
 
-  return <Image src={src} alt="Logo" width={w} height={h} />;
+  return <Image src={src} alt="Logo" width={w} height={h} unoptimized />;
 };
 
 export const DiscordIcon: React.FC<IconSvgProps> = ({
