@@ -4,7 +4,7 @@ import { IconSvgProps } from "@/types";
 import Image from "next/image";
 
 export const Logo: React.FC<IconSvgProps> = ({
-  size = 240,
+  // size  ,
   width,
   height,
   ...props
@@ -12,8 +12,8 @@ export const Logo: React.FC<IconSvgProps> = ({
   const parseNumber = (v?: string | number) =>
     typeof v === "string" ? Number(v) : v;
 
-  const w = parseNumber(size ?? width);
-  const h = parseNumber(size ?? height);
+  const w = parseNumber(width);
+  const h = parseNumber(height);
 
   return (
     <Image

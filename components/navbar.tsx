@@ -24,14 +24,14 @@ export const Navbar = () => {
     <>
       <HeroUINavbar
         maxWidth="xl"
-        className="fixed top-0 z-50 bg-background/80 backdrop-blur-lg py-10">
+        className="fixed top-0 z-50 bg-background/80 backdrop-blur-lg py-6 shadow-md">
         {/* Left: Logo */}
         <NavbarContent className="basis-1/5" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit ">
             <NextLink
               href="/"
-              className="flex justify-start items-center gap-1 py-4">
-              <Logo />
+              className="flex justify-start items-center gap-1 py-2">
+              <Logo width={150} height={150} />
             </NextLink>
           </NavbarBrand>
         </NavbarContent>

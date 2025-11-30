@@ -69,7 +69,7 @@ export default function RootLayout({
                   <BookAdventureModal />
                 </section>
               </main>
-              <footer className="bg-black text-white py-10">
+              <footer className=" text-white py-10 inset-shadow-2xs border-t border-gray-600">
                 <section id="contact">
                   <div className="mx-auto flex w-11/12 max-w-6xl flex-col gap-8 md:flex-row md:justify-between">
                     {/* Logo + tagline */}
@@ -145,7 +145,7 @@ export default function RootLayout({
                   </div>
 
                   {/* Bottom bar */}
-                  <div className="mt-8 border-t border-gray-800 pt-4 text-center text-xs text-gray-400">
+                  <div className="mt-8 inset-shadow-sm pt-8 text-center text-xs text-gray-400">
                     © 2025 Aleph. All rights reserved.
                   </div>
                 </section>

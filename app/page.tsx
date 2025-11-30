@@ -14,7 +14,7 @@ export default function Home() {
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: "url('/background.jpg')" }}>
-          <div className="absolute z-1 min-w-screen h-50 bottom-0 bg-gradient-to-b from-transparent via-[#c7c7c7] to-white">
+          <div className="absolute z-1 w-full h-50 bottom-0 bg-gradient-to-b from-transparent via-[#c7c7c7] to-white">
             {""}
           </div>
         </div>

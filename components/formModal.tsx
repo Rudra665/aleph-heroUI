@@ -85,6 +85,12 @@ export default function BookAdventureModal() {
         onOpenChange={(open) => (open ? openModal() : closeModal())}
         placement="center"
         size="2xl"
+        classNames={{
+          base: "bg-background text-foreground",
+          header: "bg-background",
+          body: "bg-background",
+          footer: "bg-background",
+        }}
         scrollBehavior="inside">
         <ModalContent>
           {() => (
