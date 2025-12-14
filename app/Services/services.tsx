@@ -43,7 +43,7 @@ export default function Services() {
           Services We <span className="text-red-500">Offer</span>
         </h2>
 
-        <p className="text-gray-600 mt-2 max-w-2xl mx-auto font-outfit text-sm">
+        <p className="text-gray-400 mt-2 max-w-2xl mx-auto font-outfit text-sm">
           Comprehensive travel solutions focused on sustainability,
           responsibility, and meaningful experiences.
         </p>

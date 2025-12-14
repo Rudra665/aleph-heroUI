@@ -43,7 +43,7 @@ export default function WhyChooseUs() {
       </div>
 
       {/* Cards */}
-      <div className="max-w-7xl text-sm mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
         {items.map((item, index) => (
           <Link
             key={index}

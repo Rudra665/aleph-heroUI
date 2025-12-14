@@ -28,7 +28,7 @@ export default function Vision() {
             Our Vision
           </h3>
 
-          <p className="text-gray-600 leading-relaxed text-sm">
+          <p className="text-gray-400 leading-relaxed">
             To be the leading provider of transformative travel experiences that
             inspire personal growth, foster cultural understanding, and create
             lasting positive impact on communities and the environment.
@@ -53,7 +53,7 @@ export default function Vision() {
             Our Mission
           </h3>
 
-          <p className="text-gray-600 leading-relaxed text-sm">
+          <p className="text-gray-400 leading-relaxed">
             To deliver exceptional, responsible travel experiences through
             sustainable practices, authentic cultural connections, and
             unwavering commitment to excellence in every journey we create.

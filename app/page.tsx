@@ -4,9 +4,13 @@ import WhyChooseUs from "@/app/WhyChooseUs/whyChooseUs";
 import Services from "@/app/Services/services";
 import TopProducts from "@/app/Products/products";
 import { useModalStore } from "@/store/modalStore";
+import { use, useEffect, useState } from "react";
+import { useThemeStore } from "@/store/themeStore";
 
 export default function Home() {
   const openModal = useModalStore((s: any) => s.openModal);
+  const mode = useThemeStore((s) => s.mode);
+
   return (
     <>
       <section className="relative w-full min-h-screen flex items-center">
@@ -14,9 +18,15 @@ export default function Home() {
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: "url('/background.jpg')" }}>
-          <div className="absolute z-1 w-full h-50 bottom-0 bg-gradient-to-b from-transparent via-[#c7c7c7] to-white">
-            {""}
-          </div>
+          {mode != "aleph-dark" ? (
+            <div className="absolute z-1 w-full h-50 bottom-0 bg-gradient-to-b from-transparent via-[#c7c7c7] to-white dark:via-[#222831] dark:to-[#222831]">
+              {""}
+            </div>
+          ) : (
+            <div className="absolute z-1 w-full h-50 bottom-0 bg-gradient-to-b from-transparent via-[#222831] to-[#222831]">
+              {""}
+            </div>
+          )}
         </div>
         {/* Blur fade */}
 
